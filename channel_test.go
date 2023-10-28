@@ -7,6 +7,34 @@ import (
 	"time"
 )
 
+func TestSelectChannel(t *testing.T) {
+	channel1 := make(chan string)
+	channel2 := make(chan string)
+
+	defer close(channel1)
+	defer close(channel2)
+
+	go GiveMeResponse(channel1)
+	go GiveMeResponse(channel2)
+
+	var counter int = 0
+
+	for {
+		select {
+		case data := <-channel1:
+			fmt.Println("Data from channel 1:", data)
+			counter++
+		case data := <-channel2:
+			fmt.Println("Data from channel 2:", data)
+			counter++
+		}
+
+		if counter == 2 {
+			break
+		}
+	}
+}
+
 func TestRangeChannel(t *testing.T) {
 	channel := make(chan string)
 
@@ -72,8 +100,8 @@ func TestInOutChannel(t *testing.T) {
 
 	time.Sleep(5 * time.Second)
 }
-func GiveMeResponse(response chan string) {
-	response <- "BLA_BLA_BLA"
+func GiveMeResponse(channel chan string) {
+	channel <- "BLA_BLA_BLA"
 
 	time.Sleep(1 * time.Second)
 }
