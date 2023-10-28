@@ -2,9 +2,26 @@ package golanggoroutine
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 	"time"
 )
+
+func TestRangeChannel(t *testing.T) {
+	channel := make(chan string)
+
+	go func() {
+		for i := 0; i < 10; i++ {
+			channel <- "Value of " + strconv.Itoa(i+1)
+		}
+
+		close(channel)
+	}()
+
+	for data := range channel {
+		fmt.Println("Receive:", data)
+	}
+}
 
 func TestBufferedChannel(t *testing.T) {
 	channel := make(chan string, 3)
