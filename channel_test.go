@@ -6,6 +6,33 @@ import (
 	"time"
 )
 
+func TestBufferedChannel(t *testing.T) {
+	channel := make(chan string, 3)
+
+	defer close(channel)
+
+	go func() {
+		channel <- "Yudistira"
+		channel <- "Eka"
+		channel <- "Pratama"
+	}()
+
+	go func() {
+		fmt.Println(<-channel)
+		fmt.Println(<-channel)
+		fmt.Println(<-channel)
+	}()
+
+	// channel <- "Anjim" // deadlock
+
+	fmt.Println(cap(channel))
+	fmt.Println(len(channel))
+
+	time.Sleep(2 * time.Second)
+
+	fmt.Println("DONE!")
+}
+
 func OnlyIn(channel chan<- string) {
 	time.Sleep(2 * time.Second)
 
