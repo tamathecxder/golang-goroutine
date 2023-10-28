@@ -6,6 +6,24 @@ import (
 	"time"
 )
 
+func GiveMeResponse(response chan string) {
+	response <- "BLA_BLA_BLA"
+
+	time.Sleep(1 * time.Second)
+}
+
+func TestChannelAsParameter(t *testing.T) {
+	channel := make(chan string)
+
+	go GiveMeResponse(channel)
+
+	data := <-channel
+
+	fmt.Println(data)
+
+	defer close(channel)
+}
+
 func TestRunChannel(t *testing.T) {
 	channel := make(chan string)
 
