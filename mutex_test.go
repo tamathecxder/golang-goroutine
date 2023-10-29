@@ -7,6 +7,61 @@ import (
 	"time"
 )
 
+type UserBalance struct {
+	sync.Mutex
+	Name    string
+	Balance int
+}
+
+func (user *UserBalance) Lock() {
+	user.Mutex.Lock()
+}
+
+func (user *UserBalance) Unlock() {
+	user.Mutex.Unlock()
+}
+
+func (user *UserBalance) Change(amount int) {
+	user.Balance = user.Balance + amount
+}
+
+func Transfer(userSender *UserBalance, userReceiver *UserBalance, amount int) {
+	userSender.Lock()
+	fmt.Println("Lock Sender:", userSender.Name)
+	userSender.Change(-amount)
+
+	time.Sleep(1 * time.Second)
+
+	userReceiver.Lock()
+	fmt.Println("Lock Receiver:", userReceiver.Name)
+	userReceiver.Change(amount)
+
+	time.Sleep(1 * time.Second)
+
+	userSender.Unlock()
+	userReceiver.Unlock()
+}
+
+func TestDeadlock(t *testing.T) {
+	user1 := UserBalance{
+		Name:    "Karina",
+		Balance: 1000000,
+	}
+
+	user2 := UserBalance{
+		Name:    "Winter",
+		Balance: 1000000,
+	}
+
+	go Transfer(&user1, &user2, 100000) // karina = 90.000, winter = 110.000
+	go Transfer(&user2, &user1, 200000)
+
+	time.Sleep(5 * time.Second)
+
+	fmt.Println("User 1", user1.Name, ", Balance:", user1.Balance)
+	fmt.Println("User 2", user2.Name, ", Balance:", user2.Balance)
+}
+
 type BankAccount struct {
 	RWMutex sync.RWMutex
 	Balance int
