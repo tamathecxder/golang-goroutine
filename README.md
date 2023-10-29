@@ -23,7 +23,7 @@ Goroutines are a cornerstone of Go's concurrency model. They are lightweight, ef
 
 ## Learning Resources
 
-I've gathered my knowledge on Golang goroutines from a variety of sources, but one that stands out is the excellent video tutorials by "Programmer Zaman Now" on YouTube. You can find the complete tutorial series [here](https://www.youtube.com/programmerzamannow). These tutorials provide clear explanations and practical examples, making them an invaluable resource for learning goroutines in Go.
+I've gathered my knowledge on Golang goroutines from a variety of sources, but one that stands out is the excellent video tutorials by "Programmer Zaman Now" on YouTube. You can find the complete tutorial series [here](https://www.udemy.com/course/pemrograman-go-lang-pemula-sampai-mahir). These tutorials provide clear explanations and practical examples, making them an invaluable resource for learning goroutines in Go.
 
 Additionally, I've also referred to official Go documentation, blog posts, and books to deepen my understanding of goroutines.
 
@@ -34,7 +34,7 @@ Before you embark on your journey to master goroutines, make sure you have Go in
 To begin exploring the world of goroutines, clone this repository to access a wealth of code examples, notes, and relevant materials. Use the following command to clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/learning-golang-goroutines.git
+git clone https://github.com/tamathecxder/golang-goroutine.git
 ```
 
 ## Code Examples
